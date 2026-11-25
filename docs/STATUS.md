@@ -1,0 +1,3 @@
+# Estado do projeto
+Fundação inicial, não aplicação homologada. O pacote V2 anterior foi auditado: envio individual protegido, esquema simplificado contents, ausência de recorrência, limites por grupo ainda não implementados, identidade da conta deve ser verificada também no momento de operação, uploads públicos precisam revisão, testes integrados não executados. Não confundir lint com testes.
+Meta imediata: instalação reproduzível, painel navegável, sincronização somente leitura, gestão de mídia e rascunhos, auditoria e revisão. Etapas seguintes: modelagem ampliada e aprovação, teste MySQL, homologação em grupo próprio autorizado, validação de ambiente Plesk. Não realizar disparos reais.
