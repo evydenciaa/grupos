@@ -5,3 +5,10 @@ Artisan::command('grupos:maintenance',function(){
  $this->info('Manutenção concluída.');
 });
 Schedule::command('grupos:maintenance')->everyFiveMinutes()->withoutOverlapping(10);
+
+Artisan::command('grupos:refresh-metadata',function(){
+ $state=app(\App\Services\MetadataRefresh::class)->run();
+ $this->info('Metadata refresh: '.$state);
+ return $state==='failed'?1:0;
+});
+Schedule::command('grupos:refresh-metadata')->everyFiveMinutes()->withoutOverlapping(5)->when(fn()=>config('grupos.metadata_auto_refresh'));
