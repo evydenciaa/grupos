@@ -1,0 +1,27 @@
+name: Starter integration
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, intl, pdo_sqlite, fileinfo, curl
+          tools: composer:v2
+      - run: find overlay -name '*.php' -print0 | xargs -0 -n1 php -l
+      - run: bash setup.sh "$RUNNER_TEMP/grupos-app"
+      - run: |
+          cd "$RUNNER_TEMP/grupos-app"
+          php artisan test
+          php artisan route:list
+          php artisan migrate --force
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+          CACHE_STORE: array
+          GRUPOS_SENDING_ENABLED: 'false'
